@@ -15,6 +15,8 @@ app.use((req, res, next) => {
     next();
 })
 
+getCurrentTimeToString = () => new Date().toString();
+
 app.get('/', (req, res) => res.sendFile(abs_html_path));
 app.use('/public', express.static(abs_static_path));
 app.use('/json', (req, res) => {
@@ -23,8 +25,15 @@ app.use('/json', (req, res) => {
     } else {
         res.json({ "message": "Hello json" });
     }
-})
-
+});
+app.get('/now', (req, res, next) => {
+    req.time = getCurrentTimeToString();
+    next()
+}, (req, res) => {
+    res.json(
+        { time: req.time }
+    );
+});
 
 
 module.exports = app;
