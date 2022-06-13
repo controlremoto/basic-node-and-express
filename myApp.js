@@ -9,6 +9,11 @@ const abs_static_path = __dirname + '/public';
 
 app.get('/', (req,res) => res.sendFile(abs_html_path));
 app.use('/public',express.static(abs_static_path));
+app.use('/json', (req,res) => {
+    res.json({
+        "message": "Hello json"
+    })
+} )
 
 
 
