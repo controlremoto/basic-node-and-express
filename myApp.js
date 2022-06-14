@@ -40,16 +40,28 @@ app.get('/now', (req, res, next) => {
         { time: req.time }
     );
 });
+
+// Use req.params
 app.get('/:word/echo', (req, res) => {
     const { word } = req.params;
     res.json({
         echo: word
     })
 })
+
+// Use req.query
 app.get('/name', (req, res) => {
     const { first, last } = req.query;
     res.json({
         name: first + " " + last
+    })
+})
+
+// Use post
+app.post('/name', (req, res) => {
+    const { first, last } = req.body;
+    res.json({
+        name: `${first} ${last}`
     })
 })
 
