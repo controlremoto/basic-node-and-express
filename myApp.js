@@ -1,7 +1,10 @@
 let express = require('express');
 let app = express();
 require('dotenv').config();
+var bodyParser = require('body-parser');
 
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 // Define html absolute path
 const abs_html_path = __dirname + '/views/index.html'
@@ -9,13 +12,16 @@ const abs_html_path = __dirname + '/views/index.html'
 // Define static aboslute path
 const abs_static_path = __dirname + '/public';
 
+// Return current server time
+getCurrentTimeToString = () => new Date().toString();
+
 // The root-top-middleware
 app.use((req, res, next) => {
     console.log(req.method + " " + req.path + " - " + req.ip);
     next();
 })
 
-getCurrentTimeToString = () => new Date().toString();
+app.use(urlencodedParser);
 
 app.get('/', (req, res) => res.sendFile(abs_html_path));
 app.use('/public', express.static(abs_static_path));
